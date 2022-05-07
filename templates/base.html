@@ -39,11 +39,11 @@
     {% block extra_javascript%}
     {% endblock %}
 
-    <title>Deckard's Bookstore {% block extra_title %}</title>
+    <title>Deckard's Bookstore {% block extra_title %}{% endblock %}</title>
 </head>
 
 <body>
-    
+
     <header class="container-fluid fixed-top"></header>
 
     {% if messages %}
