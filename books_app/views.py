@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render, reverse, redirect
 from django.contrib import messages
 from django.db.models import Q
-from .models import Book
+from .models import Book, Author
 
 # Create your views here.
 
@@ -28,6 +28,18 @@ def all_books(request):
 
     return render(request, 'books_app/books.html', context)
 
+
+def all_authors(request):
+    """ Displays all available authors """
+
+    authors = Author.objects.all()
+
+    context = {
+        'authors': authors,
+    }
+
+    return render(request, 'books_app/authors.html', context)
+    
 
 def book_detail(request, book_id):
     """ Displays book detail """
