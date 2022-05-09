@@ -13,6 +13,8 @@ class BookAdmin(admin.ModelAdmin):
         'image'
     )
 
+    ordering = ('sort_title', )
+
 
 class AuthorAdmin(admin.ModelAdmin):
     list_display = (

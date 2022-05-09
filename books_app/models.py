@@ -19,6 +19,7 @@ class Book(models.Model):
     author = models.ForeignKey('Author', null=True, blank=True, on_delete=models.SET_NULL)
     isbn = models.CharField(max_length=13)
     title = models.CharField(max_length=256)
+    sort_title = models.CharField(max_length=256)
     year = models.PositiveIntegerField()
     pages = models.PositiveIntegerField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
