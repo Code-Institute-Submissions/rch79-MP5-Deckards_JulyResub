@@ -12,4 +12,4 @@ def all_books(request):
         'books': books
     }
 
-    return render(request, 'books_app/index.html', context)
+    return render(request, 'books_app/books.html', context)
