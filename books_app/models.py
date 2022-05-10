@@ -6,6 +6,7 @@ from django.db import models
 class Author(models.Model):
     name = models.CharField(max_length=100)
     friendly_name = models.CharField(max_length=150, null=True, blank=True)
+    sort_name = models.CharField(max_length=150, null=True, blank=True)
     bio = models.TextField(null=True, blank=True)
 
     def __str__(self):
