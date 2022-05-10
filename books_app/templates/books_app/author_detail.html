@@ -18,6 +18,11 @@
         <div class="col-12 col-md-6 col-lg-4">
             <p class="mb-0">{{ author.friendly_name }}</p>
             <p class="lead mb-0 text-left font-weight-bold">${{ author.bio }}</p>
+            {% for book in author_books %}
+            <a href="{% url 'book_detail' book.id %}">
+                <p>{{ book.title }}</p>
+            </a>
+            {% endfor %}
         </div>
     </div>
 </div>

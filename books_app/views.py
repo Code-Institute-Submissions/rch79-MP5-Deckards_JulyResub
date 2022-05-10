@@ -57,9 +57,11 @@ def author_detail(request, author_id):
     """ Displays book detail """
 
     author = get_object_or_404(Author, pk=author_id)
+    books = Book.objects.filter(author__exact=author)
 
     context = {
-        'author': author
+        'author': author,
+        'author_books': books
     }
 
     return render(request, 'books_app/author_detail.html', context)
