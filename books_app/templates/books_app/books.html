@@ -35,10 +35,14 @@
                                 </a>
                             {% endif %}
                             <div class="card-body pb-0">
-                                <p class="mb-0">{{ book.title }}</p>
+                                <a href="{% url 'book_detail' book.id %}">
+                                    <p class="mb-0">{{ book.title }}</p>
+                                </a>
                             </div>
                             <div class="card-body pt-0 pb-1">
-                                <p class="small">by {{ book.author.friendly_name }}</p>
+                                <p class="small">by 
+                                    <a href="{% url 'author_detail' book.author.id %}">{{ book.author.friendly_name }}</a>
+                                </p>
                             </div>
                             <div class="card-footer bg-white pt-0 border-0 text-left">
                                 <div class="row">

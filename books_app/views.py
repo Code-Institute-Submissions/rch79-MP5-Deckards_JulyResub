@@ -39,7 +39,7 @@ def all_authors(request):
     }
 
     return render(request, 'books_app/authors.html', context)
-    
+ 
 
 def book_detail(request, book_id):
     """ Displays book detail """
@@ -51,3 +51,15 @@ def book_detail(request, book_id):
     }
 
     return render(request, 'books_app/book_detail.html', context)
+
+
+def author_detail(request, author_id):
+    """ Displays book detail """
+
+    author = get_object_or_404(Author, pk=author_id)
+
+    context = {
+        'author': author
+    }
+
+    return render(request, 'books_app/author_detail.html', context)
