@@ -81,4 +81,10 @@
         </div>
     </div>
 </div>
-{% endblock%}
+
+{% endblock %}
+
+{% block postload_javascript %}
+{{ block.super }}
+{% include 'books_app/includes/quantity_input_script.html' %}
+{% endblock %}

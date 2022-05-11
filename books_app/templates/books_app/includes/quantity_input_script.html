@@ -1,0 +1,29 @@
+<script type="text/javascript">
+
+    // disables plus or minus buttons based on allowed limits
+    function handleEnableDisable(bookId) {
+        var currentValue = parseInt($('#id_qty_${itemId}')).val();
+        var minusDisabled = currentValue < 2;
+        var plusDisabled = currentValue > 98;
+    }
+
+    // increment quantity
+    $('.increment-qty').click(function(e) {
+        e.preventDefault();   // prevents default button action
+        var closestInput = $(this).closest('.input-group').find('.qty_input')[0];
+        var currentValue = parseInt($(closestInput).val());
+        $(closestInput).val(currentValue + 1);
+        var bookId = $(this).data('book_id');
+        handleEnableDisable(bookId);
+    })
+
+    // decrement quantity
+    $('.decrement-qty').click(function(e) {
+        e.preventDefault();   // prevents default button action
+        var closestInput = $(this).closest('.input-group').find('.qty_input')[0];
+        var currentValue = parseInt($(closestInput).val());
+        $(closestInput).val(currentValue -1);
+        var bookId = $(this).data('book_id');
+        handleEnableDisable(bookId);
+    })
+</script>

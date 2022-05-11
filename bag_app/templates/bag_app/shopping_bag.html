@@ -22,29 +22,59 @@
     <div class="row">
         <div class="col">
             {% if bag_items %}
-            <div class="table-responsive rounded">
+            <div class="table-responsive rounded table-bordered">
                 <table>
-                    <thead>
+                    <thead class="thead-dark">
                         <th scope="col">Product info</th>
                         <th scope="col"></th>
-                        <th scope="col">Price</th>
                         <th scope="col">Qty</th>
+                        <th scope="col">Price</th>
                         <th scope="col">Subtotal</th>
                     </thead>
-                </table>
                 {% for item in bag_items %}
-                <tr>
+                <tr class="mb-5 bag-table">
                     <td>
-                        <img img-fluid rounded src="{{ item.book.image.url }}" alt="">
+                        <img class="img-fluid rounded" src="{{ item.book.image.url }}" alt="">
                     </td>
                     <td>
                         <p>{{ item.book.title }}</p>
+                    </td>
+    
+                    <td>
+                        <form method="POST" class="form update-form" action"">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <button class="decrement-qty btn btn-black rounded-0 btn-sm" data-item-id="{{ item.book_id }}"
+                                            id="decrement-qty_{{ item.book_id }}">
+                                            <span class>
+                                                <i class="fas fa-minus fa-sm"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <input type="number" class="form-control form-control-sm qty_input" name="quantity" value="{{ item.quantity }}" min="1"
+                                        max="99" data-item-id="{{ item.book_id }}" id="id_qty_{{ item.book_id }}">
+                                    <div class="input-group-append">
+                                        <button class="increment-qty btn btn-black rounded-0 btn-sm" data-item-id="{{ item.book_id }}"
+                                            id="increment-qty_{{ item.book_id }}">
+                                            <span class">
+                                                <i class="fas fa-plus fa-sm"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form> 
+                        <a class="update-link text-info"><small>Update</small></a> 
+                        <a class="remove-item text-danger float-right" id="remove_{{ item.book_id }}"><small>Remove Item</small></a>
+
                     </td>
                     <td>
                         <p>${{ item.book.price }}</p>
                     </td>
                     <td>
-                        <p>{{ item.quantity }}</p>
+                        <p>{{ item.book.price|floatformat:2}}</p>
                     </td>
                 </tr>
                 {% endfor %}
@@ -92,3 +122,29 @@
     </div>
 </div>
 {% endblock%}
+
+{% block postload_javascript %}
+{{ block.super }}
+{% include 'books_app/includes/quantity_input_script.html' %}
+
+<script type="text/javascript">
+    // Update product quantity //
+    $('.update-link').click(function(e) {
+        var form = $(this).prev('.update-form');
+        form.submit();
+    });
+
+    // Remove item and refresh page
+    $('.remove-item').click(function(e) {
+        var csrftoken = "{{ csrf_token }}";
+        var bookId = $(this).attr('id').split('remove_')[1];
+        var url = '/bag/remove/${bookId}';
+        var data = {'csrfmiddlewaretoken': csrf_token};
+
+        $.post(url, data)
+        .done(function() {
+            location.reload();
+        });
+    })
+</script>
+{% endblock %}
