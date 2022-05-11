@@ -64,3 +64,11 @@ def remove_from_bag(request, book_id):
 
     except Exception as e:
         return HttpResponse(status=500)
+
+
+def clear_bag(request):
+    '''Clears all items from shopping bag'''
+    bag = request.session.get('bag', {})
+    bag.clear()
+    request.session['bag'] = bag
+    return redirect(reverse(view_bag))
