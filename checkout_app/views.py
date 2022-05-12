@@ -1,13 +1,11 @@
 from django.shortcuts import redirect, render, reverse
 from django.contrib import messages
 from django.conf import settings
-from Deckards.settings import STRIPE_PUBLIC_KEY
-
-from bag_app.contexts import bag_contents
-from .forms import OrderForm
 
 import stripe
 
+from bag_app.contexts import bag_contents
+from .forms import OrderForm
 
 # Create your views here.
 
