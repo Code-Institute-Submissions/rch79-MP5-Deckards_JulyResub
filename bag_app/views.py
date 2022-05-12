@@ -1,5 +1,7 @@
 from django.urls import reverse
 from django.shortcuts import render, redirect, HttpResponse
+from django.contrib import messages
+from books_app.models import Book
 
 # Create your views here.
 
@@ -13,6 +15,7 @@ def view_bag(request):
 def add_to_bag(request, book_id):
     '''Add selected qty of specified product to shopping bag'''
 
+    book = Book.objects.get(pk=book_id)
     quantity = int(request.POST.get('quantity'))
     redirect_url = request.POST.get('redirect_url')
 
@@ -26,6 +29,8 @@ def add_to_bag(request, book_id):
     else:
         bag[book_id] = quantity
 
+    messages.success(request, f'Added {book.title} to your bag')
+
     request.session['bag'] = bag
     return redirect(redirect_url)
 
@@ -33,6 +38,7 @@ def add_to_bag(request, book_id):
 def adjust_bag(request, book_id):
     '''Add selected qty of specified product to shopping bag'''
 
+    book = Book.objects.get(pk=book_id)
     quantity = int(request.POST.get('quantity'))
 
     # stores contents of shopping bag in http session
@@ -42,8 +48,10 @@ def adjust_bag(request, book_id):
 
     if quantity > 0:
         bag[book_id] = quantity  # changes the item qty accordingly
+        messages.success(request, 'Shopping bag successfully updated')
     else:
         bag.pop(book_id)  # deletes the item if qty is set to 0
+        messages.success(request, f'{book.title} removed from your bag')
 
     request.session['bag'] = bag
 
@@ -54,15 +62,19 @@ def adjust_bag(request, book_id):
 def remove_from_bag(request, book_id):
     ''' Removes an item from the bag'''
 
+    book = Book.objects.get(pk=book_id)
+
     try:
 
         bag = request.session.get('bag', {})
         bag.pop(book_id)
 
         request.session['bag'] = bag
+        messages.success(request, f'{book.title} removed from your bag')
         return HttpResponse(status=200)
 
     except Exception as e:
+        messages.error(request, f'Error removing item: {e}')
         return HttpResponse(status=500)
 
 
@@ -71,4 +83,5 @@ def clear_bag(request):
     bag = request.session.get('bag', {})
     bag.clear()
     request.session['bag'] = bag
+    messages.success(request, 'Shopping bag successfully cleared')
     return redirect(reverse(view_bag))

@@ -74,6 +74,17 @@ body {
     border-collapse: separate;
     border-spacing:0 20px;
 }
+
+.message-container {
+    z-index: 999999999;
+    top: 72px;
+    right: 15px;
+    position: fixed;
+}
+
+.custom-toast {
+    overflow: visible;
+}
 /* ---------------------------------------- Media Queries */
 
 /* Slightly larger container on xl screens */

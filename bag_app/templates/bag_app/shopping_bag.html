@@ -36,7 +36,9 @@
                 {% for item in bag_items %}
                 <tr class="mb-5 bag-table">
                     <td>
-                        <img class="img-fluid rounded" src="{{ item.book.image.url }}" alt="">
+                        <div class="col-9">
+                            <img class="img-fluid w-100 rounded" src="{{ item.book.image.url }}" alt="">
+                        </div>
                     </td>
                     <td>
                         <p>{{ item.book.title }}</p>
