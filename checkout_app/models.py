@@ -38,7 +38,10 @@ class Order(models.Model):
         Update grand total each time
         new book is added to bag
         '''
+
+        'sets order total to 0 if there are no items in shopping cart, otherwise order total will be None'
         self.order_total = self.lineitems.aggregate(Sum('lineitem_total'))['lineitem_total__sum'] or 0
+
         if self.order_total < settings.FREE_DELIVERY_THRESHOLD:
             self.delivery_cost = self.order_total * settings.STANDARD_DELIVERY_PERCENTAGE / 100
         else:
