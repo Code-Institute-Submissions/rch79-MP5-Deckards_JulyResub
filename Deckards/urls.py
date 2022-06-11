@@ -25,5 +25,6 @@ urlpatterns = [
     path('books/', include('books_app.urls')),
     path('authors/', include('books_app.urls_authors')),
     path('shopping_bag/', include('bag_app.urls')),
-    path('checkout/', include('checkout_app.urls'),)
+    path('checkout/', include('checkout_app.urls')),
+    path('profile/', include('profiles_app.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
