@@ -1,0 +1,24 @@
+Greetings {{ order.full_name }}
+
+We've received your order. Please see below for order details:
+
+Order Number: {{ order.order.number }}
+Order Date: {{ order.date }}
+
+Order Total: {{ order.order_total }}
+Shipping charge: {{ order.delivery_cost }}
+Grand Total: {{ order.grand_total }}
+
+Shipping information:
+Address: {{ order.address_line1 }}
+Town or City: {{order.town_or_city }}
+Post Code: {{ order.postcode }}
+Country: {{ order.country }}
+
+Please feel free to contact us at {{ contact_email }} if you have any questions.
+
+Thank you for shopping with us!
+
+Sincerely,
+
+Deckard's Bookstore
