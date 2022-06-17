@@ -28,7 +28,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', '')
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    'https://deckards.herokuapp.com/'
+    'deckards.herokuapp.com'
 ]
 
 
