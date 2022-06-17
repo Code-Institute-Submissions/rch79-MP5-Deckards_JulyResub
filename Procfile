@@ -1,1 +1,1 @@
-web: gunicorn Deckards.wsgi
+web: gunicorn wsgi.py
