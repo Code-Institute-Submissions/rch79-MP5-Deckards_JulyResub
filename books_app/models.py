@@ -53,4 +53,3 @@ class AwardDetails(models.Model):
     award = models.ForeignKey('Award', null=True, blank=True, on_delete=models.CASCADE)
     award_year = models.PositiveIntegerField()
     category = models.CharField(max_length=256)
-

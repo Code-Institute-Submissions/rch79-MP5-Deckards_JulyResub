@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+<div class="header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="overlay"></div>
+<p class="mb-0">{{ award.friendly_name }}</p>
+<p class="lead mb-0 text-left font-weight-bold">{{ award.description }}</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-md-6 col-lg-4 offset-lg-2">
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+            <p class="mb-0">{{ award.friendly_name }}</p>
+            <p class="lead mb-0 text-left font-weight-bold">{{ award.description }}</p>
+            {% for book in award.books.all %}
+            <a href="{% url 'book_detail' book.id %}">
+                <p>{{ book.title }}</p>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% for year in award_years %}
+    <h1>{{ year }}</h1>
+{% endfor %}
+<div class="container-fluid">
+    {% for award_detail in award_details %}
+        <p>{{ award_detail.award_year }}</p>
+        <p>
+            <a href="{% url 'book_detail' award_detail.book.id %}"> {{ award_detail.book }}</a>
+        </p>
+        <p>
+            <a href="{% url 'author_detail' award_detail.book.author.id %}">{{ award_detail.book.author.friendly_name }}</a>
+        </p>
+        <p>{{ award_detail.category }}</p>
+    {% endfor %}
+</div>
+<a href="{{request.META.HTTP_REFERER|escape}}">Back</a>
+{% endblock%}
+

@@ -33,7 +33,9 @@ class AwardAdmin(admin.ModelAdmin):
 
 
 class AwardDetailsAdmin(admin.ModelAdmin):
+    readonly_fields = ('id',)
     list_display = (
+        'id',
         'award',
         'book',
         'award_year',
