@@ -1,4 +1,3 @@
-from operator import length_hint
 from django.db import models
 
 # Create your models here.
@@ -33,3 +32,25 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Award(models.Model):
+    name = models.CharField(max_length=100)
+    friendly_name = models.CharField(max_length=150, null=True, blank=True)
+    sort_name = models.CharField(max_length=150, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    books = models.ManyToManyField(Book, through='AwardDetails')
+
+    def __str__(self):
+        return self.name
+
+    def get_friendly_name(self):
+        return self.friendly_name
+
+
+class AwardDetails(models.Model):
+    book = models.ForeignKey('Book', null=True, blank=True, on_delete=models.CASCADE)
+    award = models.ForeignKey('Award', null=True, blank=True, on_delete=models.CASCADE)
+    award_year = models.PositiveIntegerField()
+    category = models.CharField(max_length=256)
+

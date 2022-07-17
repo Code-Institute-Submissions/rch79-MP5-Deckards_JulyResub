@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Book, Author
+from .models import Book, Author, Award, AwardDetails
 
 # Register your models here.
 
@@ -23,5 +23,24 @@ class AuthorAdmin(admin.ModelAdmin):
     )
 
 
+class AwardAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'friendly_name',
+        'sort_name',
+        'description',
+    )
+
+
+class AwardDetailsAdmin(admin.ModelAdmin):
+    list_display = (
+        'award',
+        'book',
+        'award_year',
+        'category'
+    )
+
 admin.site.register(Book, BookAdmin)
 admin.site.register(Author, AuthorAdmin)
+admin.site.register(Award, AwardAdmin)
+admin.site.register(AwardDetails, AwardDetailsAdmin)
