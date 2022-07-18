@@ -2,7 +2,9 @@ from django.shortcuts import get_object_or_404, render, reverse, redirect
 from django.contrib import messages
 from django.db.models import Q
 from django.db.models.functions import Lower
+
 from .models import Book, Author, Award, AwardDetails
+from .forms import BookForm
 
 # Create your views here.
 
@@ -119,3 +121,14 @@ def award_detail(request, award_id):
     }
 
     return render(request, 'books_app/award_detail.html', context)
+
+
+def add_book(request):
+    '''Add a book to the store'''
+    form = BookForm()
+    template = 'books_app/add_book.html'
+    context = {
+        'form': form,
+    }
+
+    return render(request, template, context)

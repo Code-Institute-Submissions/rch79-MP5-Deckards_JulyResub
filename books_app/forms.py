@@ -2,7 +2,7 @@ from django import forms
 from .models import Book, Author, Award, AwardDetails
 
 
-class BookForm(fotms.ModelForm):
+class BookForm(forms.ModelForm):
 
     class Meta:
         model = Book
@@ -12,5 +12,5 @@ class BookForm(fotms.ModelForm):
         super().__init__(*args, **kwargs)
         books = Book.objects.all()
 
-        for field_name, field in self.field.items():
+        for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'border-black-rounded-0'
