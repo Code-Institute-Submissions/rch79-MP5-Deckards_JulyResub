@@ -7,10 +7,14 @@ class BookForm(forms.ModelForm):
     class Meta:
         model = Book
         fields = '__all__'
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        books = Book.objects.all()
+        authors = Author.objects.all()
 
+        # friendly_names = [(a.id, a.get_friendly_name()) for a in authors]
+        sorted_names = [(a.id, a.sort_name) for a in authors]
+
+        self.fields['author'].choices = sorted_names
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'border-black-rounded-0'

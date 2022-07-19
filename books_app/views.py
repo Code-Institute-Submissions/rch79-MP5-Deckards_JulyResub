@@ -125,7 +125,18 @@ def award_detail(request, award_id):
 
 def add_book(request):
     '''Add a book to the store'''
-    form = BookForm()
+
+    if request.method == "POST":
+        form = BookForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save(), 'New book successfully added'
+            messages.success(request, 'New book successfully added')
+            return redirect(reverse('add_book'))
+        else:
+            messages.error(request, 'Failed to add new book. Please ensure information provided is valid')
+    else:
+        form = BookForm()
+
     template = 'books_app/add_book.html'
     context = {
         'form': form,

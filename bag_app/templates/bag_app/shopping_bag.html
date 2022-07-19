@@ -36,9 +36,11 @@
                 {% for item in bag_items %}
                 <tr class="mb-5 bag-table">
                     <td>
-                        <div class="col-9">
+                        {% if item.book.image %}
                             <img class="img-fluid w-100 rounded" src="{{ item.book.image.url }}" alt="">
-                        </div>
+                        {% else %}
+                            <img class="img-fluid w-100 rounded" src="{{ MEDIA_URL }}noimage.png" alt="">
+                        {% endif %}
                     </td>
                     <td>
                         <p>{{ item.book.title }}</p>

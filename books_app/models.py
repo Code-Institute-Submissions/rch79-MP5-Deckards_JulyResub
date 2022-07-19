@@ -3,6 +3,10 @@ from django.db import models
 # Create your models here.
 
 class Author(models.Model):
+
+    class Meta:
+        ordering = ['sort_name']
+
     name = models.CharField(max_length=100)
     friendly_name = models.CharField(max_length=150, null=True, blank=True)
     sort_name = models.CharField(max_length=150, null=True, blank=True)
