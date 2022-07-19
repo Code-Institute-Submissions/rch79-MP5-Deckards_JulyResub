@@ -169,3 +169,12 @@ def edit_book(request, book_id):
     }
 
     return render(request, template, context)
+
+
+def delete_book(request, book_id):
+    '''Delete an existing book'''
+
+    book = get_object_or_404(Book, pk=book_id)
+    book.delete()
+    messages.success(request, 'Book deleted')
+    return redirect(reverse('books'))

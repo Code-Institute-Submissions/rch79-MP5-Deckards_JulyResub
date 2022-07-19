@@ -60,6 +60,16 @@
                                     <img src="{{ MEDIA_URL }}noimage.png" alt="{{ book.title }}" class="card-img-top img-fluid">
                                 </a>
                             {% endif %}
+                            {% if request.user.is_superuser %}
+                                <div class="btn-group d-flex justify-content-center" role="group">
+                                    <button type="button" class="mr-2 btn btn-warning btn-sm">
+                                        <a href="{% url 'edit_book' book.id %}" class="text-dark"><strong>Edit Book</strong></a>
+                                    </button>
+                                    <button type="button" class="ml-2 btn btn-danger btn-sm">
+                                        <a href="{% url 'delete_book' book.id %}">Delete Book</a>
+                                    </button>
+                                </div>
+                            {% endif %}
                             <div class="card-body pb-0">
                                 <a href="{% url 'book_detail' book.id %}">
                                     <p class="mb-0">{{ book.title }}</p>
@@ -70,6 +80,7 @@
                                     <a href="{% url 'author_detail' book.author.id %}">{{ book.author.friendly_name }}</a>
                                 </p>
                             </div>
+
                             <div class="card-footer bg-white pt-0 border-0 text-left">
                                 <div class="row">
                                     <div class="col">
