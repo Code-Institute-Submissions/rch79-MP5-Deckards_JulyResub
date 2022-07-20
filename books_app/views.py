@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.db.models.functions import Lower
 
 from .models import Book, Author, Award, AwardDetails
-from .forms import BookForm
+from .forms import BookForm, AuthorForm
 
 # Create your views here.
 
@@ -178,3 +178,25 @@ def delete_book(request, book_id):
     book.delete()
     messages.success(request, 'Book deleted')
     return redirect(reverse('books'))
+
+
+def add_author(request):
+    '''Add an author to the store'''
+
+    if request.method == "POST":
+        form = AuthorForm(request.POST)
+        if form.is_valid():
+            form.save(), 'New book successfully added'
+            messages.success(request, 'New author successfully added')
+            return redirect(reverse('add_author'))
+        else:
+            messages.error(request, 'Failed to add new author. Please ensure information provided is valid')
+    else:
+        form = AuthorForm()
+
+    template = 'books_app/add_author.html'
+    context = {
+        'form': form,
+    }
+
+    return render(request, template, context)
