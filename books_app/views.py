@@ -237,3 +237,12 @@ def add_award(request):
     }
 
     return render(request, template, context)
+
+
+def delete_award(request, award_id):
+    '''Delete an existing award'''
+
+    award = get_object_or_404(Award, pk=award_id)
+    award.delete()
+    messages.success(request, 'Award deleted')
+    return redirect(reverse('awards'))

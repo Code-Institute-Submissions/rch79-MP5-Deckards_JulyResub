@@ -10,4 +10,5 @@ urlpatterns = [
     path('add_author/', views.add_author, name='add_author'),
     path('delete_author/<int:author_id>', views.delete_author, name='delete_author'),
     path('add_award/', views.add_award, name='add_award'),
+    path('delete_award/<int:award_id>', views.delete_award, name='delete_award'),
 ]
