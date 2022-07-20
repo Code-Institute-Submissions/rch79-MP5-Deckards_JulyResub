@@ -43,7 +43,7 @@ class Award(models.Model):
     friendly_name = models.CharField(max_length=150, null=True, blank=True)
     sort_name = models.CharField(max_length=150, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    books = models.ManyToManyField(Book, through='AwardDetails')
+    books = models.ManyToManyField(Book, through='AwardDetails', blank=True, null=True)
 
     def __str__(self):
         return self.name

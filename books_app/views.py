@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.db.models.functions import Lower
 
 from .models import Book, Author, Award, AwardDetails
-from .forms import BookForm, AuthorForm
+from .forms import BookForm, AuthorForm, AwardForm
 
 # Create your views here.
 
@@ -76,20 +76,6 @@ def book_detail(request, book_id):
     return render(request, 'books_app/book_detail.html', context)
 
 
-def author_detail(request, author_id):
-    """ Displays author detail """
-
-    author = get_object_or_404(Author, pk=author_id)
-    books = Book.objects.filter(author__exact=author)
-
-    context = {
-        'author': author,
-        'author_books': books
-    }
-
-    return render(request, 'books_app/author_detail.html', context)
-
-
 def all_awards(request):
     """ Displays all available book awards """
 
@@ -122,6 +108,8 @@ def award_detail(request, award_id):
 
     return render(request, 'books_app/award_detail.html', context)
 
+
+#  ---------------------------------------------- Books
 
 def add_book(request):
     '''Add a book to the store'''
@@ -180,6 +168,22 @@ def delete_book(request, book_id):
     return redirect(reverse('books'))
 
 
+#  ---------------------------------------------- Authors
+
+def author_detail(request, author_id):
+    """ Displays author detail """
+
+    author = get_object_or_404(Author, pk=author_id)
+    books = Book.objects.filter(author__exact=author)
+
+    context = {
+        'author': author,
+        'author_books': books
+    }
+
+    return render(request, 'books_app/author_detail.html', context)
+
+
 def add_author(request):
     '''Add an author to the store'''
 
@@ -209,3 +213,27 @@ def delete_author(request, author_id):
     author.delete()
     messages.success(request, 'Author deleted')
     return redirect(reverse('books'))
+
+
+#  ---------------------------------------------- Awards
+
+def add_award(request):
+    '''Add an award to the store'''
+
+    if request.method == "POST":
+        form = AwardForm(request.POST)
+        if form.is_valid():
+            form.save(), 'New award successfully added'
+            messages.success(request, 'New award successfully added')
+            return redirect(reverse('add_award'))
+        else:
+            messages.error(request, 'Failed to add new award. Please ensure information provided is valid')
+    else:
+        form = AwardForm()
+
+    template = 'books_app/add_award.html'
+    context = {
+        'form': form,
+    }
+
+    return render(request, template, context)
