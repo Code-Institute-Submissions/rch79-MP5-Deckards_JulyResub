@@ -200,3 +200,12 @@ def add_author(request):
     }
 
     return render(request, template, context)
+
+
+def delete_author(request, author_id):
+    '''Delete an existing book'''
+
+    author = get_object_or_404(Author, pk=author_id)
+    author.delete()
+    messages.success(request, 'Author deleted')
+    return redirect(reverse('books'))

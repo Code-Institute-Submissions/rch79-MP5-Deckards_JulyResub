@@ -20,7 +20,7 @@ class Author(models.Model):
 
 
 class Book(models.Model):
-    author = models.ForeignKey('Author', null=True, blank=True, on_delete=models.SET_NULL)
+    author = models.ForeignKey('Author', null=True, blank=True, on_delete=models.CASCADE)
     isbn = models.CharField(max_length=13)
     title = models.CharField(max_length=256)
     sort_title = models.CharField(max_length=256)
