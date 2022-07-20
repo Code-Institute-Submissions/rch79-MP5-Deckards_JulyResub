@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.db.models.functions import Lower
 
 from .models import Book, Author, Award, AwardDetails
-from .forms import BookForm, AuthorForm, AwardForm
+from .forms import BookForm, AuthorForm, AwardForm, AwardDetailsForm
 
 # Create your views here.
 
@@ -246,3 +246,27 @@ def delete_award(request, award_id):
     award.delete()
     messages.success(request, 'Award deleted')
     return redirect(reverse('awards'))
+
+
+#  ---------------------------------------------- Award Details
+
+def add_award_details(request):
+    '''Add award details to an existing book'''
+
+    if request.method == "POST":
+        form = AwardDetailsForm(request.POST)
+        if form.is_valid():
+            form.save(), 'Award Details successfully added'
+            messages.success(request, 'Award Details successfully added')
+            return redirect(reverse('add_award_details'))
+        else:
+            messages.error(request, 'Failed to add award details. Please ensure information provided is valid')
+    else:
+        form = AwardDetailsForm()
+
+    template = 'books_app/add_award_details.html'
+    context = {
+        'form': form,
+    }
+
+    return render(request, template, context)

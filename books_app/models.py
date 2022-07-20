@@ -20,6 +20,10 @@ class Author(models.Model):
 
 
 class Book(models.Model):
+
+    class Meta:
+        ordering = ['sort_title']
+
     author = models.ForeignKey('Author', null=True, blank=True, on_delete=models.CASCADE)
     isbn = models.CharField(max_length=13)
     title = models.CharField(max_length=256)
@@ -39,11 +43,15 @@ class Book(models.Model):
 
 
 class Award(models.Model):
+
+    class Meta:
+        ordering = ['sort_name']
+
     name = models.CharField(max_length=100)
     friendly_name = models.CharField(max_length=150, null=True, blank=True)
     sort_name = models.CharField(max_length=150, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    books = models.ManyToManyField(Book, through='AwardDetails', blank=True, null=True)
+    books = models.ManyToManyField(Book, through='AwardDetails', blank=True)
 
     def __str__(self):
         return self.name
@@ -53,6 +61,10 @@ class Award(models.Model):
 
 
 class AwardDetails(models.Model):
+
+    class Meta:
+        ordering = ['award_year']
+
     book = models.ForeignKey('Book', null=True, blank=True, on_delete=models.CASCADE)
     award = models.ForeignKey('Award', null=True, blank=True, on_delete=models.CASCADE)
     award_year = models.PositiveIntegerField()
