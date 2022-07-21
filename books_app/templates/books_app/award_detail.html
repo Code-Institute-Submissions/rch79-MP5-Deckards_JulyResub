@@ -48,9 +48,9 @@
                 <button type="button" class="mr-2 btn btn-warning btn-sm">
                     <a href="{% url 'edit_award_detail' award_detail.id %}" class="text-dark"><strong>Edit</strong></a>
                 </button>
-                {% comment %} <button type="button" class="ml-2 btn btn-danger btn-sm">
+                <button type="button" class="ml-2 btn btn-danger btn-sm">
                     <a href="{% url 'delete_award_detail' award_detail.id %}">Delete</a>
-                </button> {% endcomment %}
+                </button>
             </div>
         {% endif %}
     {% endfor %}

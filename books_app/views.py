@@ -298,3 +298,13 @@ def edit_award_detail(request, award_detail_id):
     return render(request, template, context)
 
 
+def delete_award_detail(request, award_detail_id):
+    '''Delete an existing book'''
+
+    award_detail = get_object_or_404(AwardDetails, pk=award_detail_id)
+    award_detail.delete()
+    messages.success(request, 'Award detail deleted')
+    return redirect(reverse('awards'))
+
+
+
