@@ -206,6 +206,32 @@ def add_author(request):
     return render(request, template, context)
 
 
+def edit_author(request, author_id):
+    '''Edit an existing author'''
+
+    author = get_object_or_404(Author, pk=author_id)
+
+    if request.method == 'POST':
+        form = AuthorForm(request.POST, instance=author)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Author successfully updated')
+            return redirect(reverse('authors'))
+        else:
+            messages.error(request, 'Failed to update author. Please ensure information provided is valid')
+    else:
+        form = AuthorForm(instance=author)
+        messages.info(request, f'You are editing { author.friendly_name }')
+
+    template = 'books_app/edit_author.html'
+    context = {
+        'form': form,
+        'author': author
+    }
+
+    return render(request, template, context)
+
+
 def delete_author(request, author_id):
     '''Delete an existing book'''
 

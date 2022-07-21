@@ -28,6 +28,14 @@
                             <div class="card-body pb-0">
                                 <a href="{% url 'author_detail' author.id %}"><p class="mb-0">{{ author.friendly_name }}</p></a>
                             </div>
+                            {% if request.user.is_superuser %}
+                                <div class="btn-group d-flex justify-content-center" role="group">
+                                    <button type="button" class="mr-2 btn btn-warning btn-sm">
+                                        <a href="{% url 'edit_author' author.id %}" class="text-dark"><strong>Edit</strong></a>
+                                    </button>
+
+                                </div>
+                            {% endif %}
                             <div class="card-footer bg-white pt-0 border-0 text-left">
                                 <div class="row">
                                     <div class="col">

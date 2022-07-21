@@ -25,5 +25,17 @@
                 Awards
             </a>
         </li>
+        {% if request.user.is_superuser %}
+            <li class="nav-item dropdown">
+                <a href="#" class="logo-font font-weight-bold nav-link text-black mr-5 bg-warning" id="all-products-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Store Admin
+                </a>
+                <div class="dropdown-menu border-0" aria-labelledby="all-products-link">
+                    <a href="{% url 'add_book' %}?sort=sort_title&direction=asc" class="dropdown-item">Add a Book</a>
+                    <a href="{% url 'add_author' %}?sort=price&direction=asc" class="dropdown-item">Add an Author</a>
+                    <a href="{% url 'add_award' %}?sort=rating&direction=desc" class="dropdown-item">Add an Award</a>
+                </div>
+            </li>
+        {% endif %}
     </ul>
 </div>
