@@ -93,7 +93,6 @@ def award_detail(request, award_id):
 
     award = get_object_or_404(Award, pk=award_id)
     award_details = AwardDetails.objects.filter(award__exact=award).order_by('award_year')
-
     award_years = []
     for award in award_details:
         if award.award_year not in award_years:
@@ -264,6 +263,31 @@ def add_award(request):
 
     return render(request, template, context)
 
+
+def edit_award(request, award_id):
+    '''Edit an existing award'''
+
+    award = get_object_or_404(Award, pk=award_id)
+
+    if request.method == 'POST':
+        form = AwardForm(request.POST, instance=award)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Award successfully updated')
+            return redirect(reverse('awards'))
+        else:
+            messages.error(request, 'Failed to update award. Please ensure information provided is valid')
+    else:
+        form = AwardForm(instance=award)
+        messages.info(request, f'You are editing { award.friendly_name }')
+
+    template = 'books_app/edit_award.html'
+    context = {
+        'form': form,
+        'award': award
+    }
+
+    return render(request, template, context)
 
 def delete_award(request, award_id):
     '''Delete an existing award'''
