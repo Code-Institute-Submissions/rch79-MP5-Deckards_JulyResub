@@ -33,6 +33,7 @@
 {% endfor %}
 <div class="container-fluid">
     {% for award_detail in award_details %}
+        <p>Award detail ID: {{ award_detail.id }}</p>
         <p>{{ award_detail.award_year }}</p>
         <p>
             <a href="{% url 'book_detail' award_detail.book.id %}"> {{ award_detail.book }}</a>
@@ -41,6 +42,17 @@
             <a href="{% url 'author_detail' award_detail.book.author.id %}">{{ award_detail.book.author.friendly_name }}</a>
         </p>
         <p>{{ award_detail.category }}</p>
+
+        {% if request.user.is_superuser %}
+            <div class="btn-group d-flex justify-content-center" role="group">
+                <button type="button" class="mr-2 btn btn-warning btn-sm">
+                    <a href="{% url 'edit_award_detail' award_detail.id %}" class="text-dark"><strong>Edit</strong></a>
+                </button>
+                {% comment %} <button type="button" class="ml-2 btn btn-danger btn-sm">
+                    <a href="{% url 'delete_award_detail' award_detail.id %}">Delete</a>
+                </button> {% endcomment %}
+            </div>
+        {% endif %}
     {% endfor %}
 </div>
 <a href="{{request.META.HTTP_REFERER|escape}}">Back</a>

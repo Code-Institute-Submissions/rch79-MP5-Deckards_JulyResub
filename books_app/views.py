@@ -270,3 +270,31 @@ def add_award_details(request):
     }
 
     return render(request, template, context)
+
+
+def edit_award_detail(request, award_detail_id):
+    '''Edit an existing book in the store'''
+
+    award_detail = get_object_or_404(AwardDetails, pk=award_detail_id)
+
+    if request.method == 'POST':
+        form = AwardDetailsForm(request.POST, instance=award_detail)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Book successfully updated')
+            return redirect(reverse('awards'))
+        else:
+            messages.error(request, 'Failed to update book. Please ensure information provided is valid')
+    else:
+        form = AwardDetailsForm(instance=award_detail)
+        messages.info(request, f'You are editing { award_detail.book.title }')
+
+    template = 'books_app/edit_award_detail.html'
+    context = {
+        'form': form,
+        'award_detail': award_detail
+    }
+
+    return render(request, template, context)
+
+
