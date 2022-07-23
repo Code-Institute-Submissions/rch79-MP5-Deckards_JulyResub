@@ -1,17 +1,20 @@
 from django.urls import reverse
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from books_app.models import Book
 
 # Create your views here.
 
 
+@login_required
 def view_bag(request):
     ''' Returns the shopping bag contents page'''
 
     return render(request, 'bag_app/shopping_bag.html')
 
 
+@login_required
 def add_to_bag(request, book_id):
     '''Add selected qty of specified product to shopping bag'''
 
@@ -35,6 +38,7 @@ def add_to_bag(request, book_id):
     return redirect(redirect_url)
 
 
+@login_required
 def adjust_bag(request, book_id):
     '''Add selected qty of specified product to shopping bag'''
 
@@ -59,6 +63,7 @@ def adjust_bag(request, book_id):
     return redirect(reverse(view_bag))
 
 
+@login_required
 def remove_from_bag(request, book_id):
     ''' Removes an item from the bag'''
 
@@ -78,6 +83,7 @@ def remove_from_bag(request, book_id):
         return HttpResponse(status=500)
 
 
+@login_required
 def clear_bag(request):
     '''Clears all items from shopping bag'''
     bag = request.session.get('bag', {})

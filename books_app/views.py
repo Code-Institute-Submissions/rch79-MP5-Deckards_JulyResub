@@ -8,6 +8,7 @@ from .forms import BookForm, AuthorForm, AwardForm, AwardDetailsForm
 
 # Create your views here.
 
+
 def all_books(request):
     """ Displays all available books """
 
@@ -28,7 +29,7 @@ def all_books(request):
                 direction = request.GET['direction']
                 if direction == 'desc':
                     sort_key = f'-{sort_key}'
-            
+
             books = books.order_by(sort_key)
 
         if 'q' in request.GET:
@@ -36,10 +37,11 @@ def all_books(request):
             if not query:
                 messages.error(request, "Please enter a search criteria")
                 return redirect(reverse('books'))
-            queries = Q(title__icontains=query) | Q(description__icontains=query) | Q(plot__icontains=query)
+            queries = Q(title__icontains=query) | Q(
+                description__icontains=query) | Q(plot__icontains=query)
             books = books.filter(queries)
         else:
-            query=""
+            query = ""
 
     current_sorting = f'{sort}_{direction}'
 
@@ -62,7 +64,7 @@ def all_authors(request):
     }
 
     return render(request, 'books_app/authors.html', context)
- 
+
 
 def book_detail(request, book_id):
     """ Displays book detail """
@@ -92,7 +94,8 @@ def award_detail(request, award_id):
     """ Displays award detail """
 
     award = get_object_or_404(Award, pk=award_id)
-    award_details = AwardDetails.objects.filter(award__exact=award).order_by('award_year')
+    award_details = AwardDetails.objects.filter(
+        award__exact=award).order_by('award_year')
     award_years = []
     for award in award_details:
         if award.award_year not in award_years:
@@ -116,11 +119,12 @@ def add_book(request):
     if request.method == "POST":
         form = BookForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save(), 'New book successfully added'
+            form.save()
             messages.success(request, 'New book successfully added')
             return redirect(reverse('add_book'))
         else:
-            messages.error(request, 'Failed to add new book. Please ensure information provided is valid')
+            messages.error(request, 'Failed to add new book. '
+                           'Please ensure information provided is valid')
     else:
         form = BookForm()
 
@@ -144,7 +148,8 @@ def edit_book(request, book_id):
             messages.success(request, 'Book successfully updated')
             return redirect(reverse('book_detail', args=[book.id]))
         else:
-            messages.error(request, 'Failed to update book. Please ensure information provided is valid')
+            messages.error(request, 'Failed to update book. '
+                           'Please ensure information provided is valid')
     else:
         form = BookForm(instance=book)
         messages.info(request, f'You are editing { book.title }')
@@ -189,11 +194,12 @@ def add_author(request):
     if request.method == "POST":
         form = AuthorForm(request.POST)
         if form.is_valid():
-            form.save(), 'New book successfully added'
+            form.save()
             messages.success(request, 'New author successfully added')
             return redirect(reverse('add_author'))
         else:
-            messages.error(request, 'Failed to add new author. Please ensure information provided is valid')
+            messages.error(request, 'Failed to add new author. '
+                           'Please ensure information provided is valid')
     else:
         form = AuthorForm()
 
@@ -217,7 +223,8 @@ def edit_author(request, author_id):
             messages.success(request, 'Author successfully updated')
             return redirect(reverse('authors'))
         else:
-            messages.error(request, 'Failed to update author. Please ensure information provided is valid')
+            messages.error(request, 'Failed to update author. '
+                           'Please ensure information provided is valid')
     else:
         form = AuthorForm(instance=author)
         messages.info(request, f'You are editing { author.friendly_name }')
@@ -248,11 +255,12 @@ def add_award(request):
     if request.method == "POST":
         form = AwardForm(request.POST)
         if form.is_valid():
-            form.save(), 'New award successfully added'
+            form.save()
             messages.success(request, 'New award successfully added')
             return redirect(reverse('add_award'))
         else:
-            messages.error(request, 'Failed to add new award. Please ensure information provided is valid')
+            messages.error(request, 'Failed to add new award. '
+                           'Please ensure information provided is valid')
     else:
         form = AwardForm()
 
@@ -276,7 +284,8 @@ def edit_award(request, award_id):
             messages.success(request, 'Award successfully updated')
             return redirect(reverse('awards'))
         else:
-            messages.error(request, 'Failed to update award. Please ensure information provided is valid')
+            messages.error(request, 'Failed to update award. '
+                           'Please ensure information provided is valid')
     else:
         form = AwardForm(instance=award)
         messages.info(request, f'You are editing { award.friendly_name }')
@@ -288,6 +297,7 @@ def edit_award(request, award_id):
     }
 
     return render(request, template, context)
+
 
 def delete_award(request, award_id):
     '''Delete an existing award'''
@@ -306,11 +316,12 @@ def add_award_details(request):
     if request.method == "POST":
         form = AwardDetailsForm(request.POST)
         if form.is_valid():
-            form.save(), 'Award Details successfully added'
+            form.save()
             messages.success(request, 'Award Details successfully added')
             return redirect(reverse('add_award_details'))
         else:
-            messages.error(request, 'Failed to add award details. Please ensure information provided is valid')
+            messages.error(request, 'Failed to add award details. '
+                           'Please ensure information provided is valid')
     else:
         form = AwardDetailsForm()
 
@@ -334,7 +345,8 @@ def edit_award_detail(request, award_detail_id):
             messages.success(request, 'Book successfully updated')
             return redirect(reverse('awards'))
         else:
-            messages.error(request, 'Failed to update book. Please ensure information provided is valid')
+            messages.error(request, 'Failed to update book. '
+                           'Please ensure information provided is valid')
     else:
         form = AwardDetailsForm(instance=award_detail)
         messages.info(request, f'You are editing { award_detail.book.title }')
@@ -355,6 +367,3 @@ def delete_award_detail(request, award_detail_id):
     award_detail.delete()
     messages.success(request, 'Award detail deleted')
     return redirect(reverse('awards'))
-
-
-
