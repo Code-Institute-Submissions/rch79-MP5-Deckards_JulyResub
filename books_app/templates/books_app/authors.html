@@ -29,62 +29,28 @@
         <div class="product-container col-10 offset-1">
             <div class="row mt-1 mb-2"></div>
             <div class="row">
-                {% for author in authors %}
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="card-img-top border-0">
-                            <div class="card-body pb-0">
-                                <a href="{% url 'author_detail' author.id %}"><p class="mb-0">{{ author.friendly_name }}</p></a>
-                            </div>
-                            {% if request.user.is_superuser %}
-                                <div class="btn-group d-flex justify-content-center" role="group">
-                                    <button type="button" class="mr-2 btn btn-warning btn-sm">
-                                        <a href="{% url 'edit_author' author.id %}" class="text-dark"><strong>Edit</strong></a>
-                                    </button>
-                                    <button type="button" class="mr-2 btn btn-danger btn-sm">
-                                        <a href="{% url 'delete_author' author.id %}" class="text-dark"><strong>Delete</strong></a>
-                                    </button>
-                                </div>
-                            {% endif %}
-                            <div class="card-footer bg-white pt-0 border-0 text-left">
-                                <div class="row">
-                                    <div class="col">
-                                        <p>{{ author.bio }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="card w-100" ;">
+                    <div class="card-header">
+                      Authors
                     </div>
-                    
-
-                    <!-- renders hr only in extra small screens with 1 column-->
-                    {% if forloop.counter|divisibleby:1 %}
-                        <div class="col-12 d-sm-none mb-5">
-                            <hr>
-                        </div>
-                    {% endif %}
-
-                    <!-- renders hr only in small or medium screens with 2 columns-->
-                    {% if forloop.counter|divisibleby:2 %}
-                        <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-5">
-                            <hr>
-                        </div>
-                    {% endif %}
-
-                    <!-- renders hr only in large screens with 3 columns -->
-                    {% if forloop.counter|divisibleby:3 %}
-                        <div class="col-12 d-none d-lg-block d-xl-none mb-5">
-                            <hr>
-                        </div>
-                    {% endif %}
-
-                    <!-- renders hr only in large screens with 4 columns -->
-                    {% if forloop.counter|divisibleby:4 %}
-                        <div class="col-12 d-none d-xl-block mb-5">
-                            <hr>
-                        </div>
-                    {% endif %}
-
-                {% endfor %}
+                    <ul class="list-group list-group-flush">
+                        {% for author in authors %}
+                            <li class="list-group-item">
+                                <a href="{% url 'author_detail' author.id %}"><p class="mb-0">{{ author.friendly_name }}</p>
+                                    {% if request.user.is_superuser %}
+                                        <div class="btn-group d-flex justify-content-center" role="group">
+                                            <button type="button" class="mr-2 btn btn-warning btn-sm">
+                                                <a href="{% url 'edit_author' author.id %}" class="text-dark"><strong>Edit</strong></a>
+                                            </button>
+                                            <button type="button" class="mr-2 btn btn-danger btn-sm">
+                                                <a href="{% url 'delete_author' author.id %}" class="text-dark"><strong>Delete</strong></a>
+                                            </button>
+                                        </div>
+                                    {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                  </div>
             </div>
         </div>
     </div>
