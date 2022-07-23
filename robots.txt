@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /accounts/
+Disallow: /shopping_bag/
+Disallow: /admin/
+Disallow: /profile/
+Disallow: /checkout/
+Sitemap: https://deckards.herokuapp.com/sitemap.xml
