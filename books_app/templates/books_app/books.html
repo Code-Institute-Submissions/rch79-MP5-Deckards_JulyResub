@@ -60,11 +60,11 @@
                         <div class="card-img-top border-0 book-img-card">
                             {% if book.image %}
                                 <a href="{% url 'book_detail' book.id %}">
-                                    <img src="{{ book.image.url }}" alt="{{ book.title }}" class="card-img-top img-fluid">
+                                    <img src="{{ book.image.url }}" alt="{{ book.title }} cover" class="card-img-top img-fluid">
                                 </a>
                             {% else %}
                                 <a href="{% url 'book_detail' book.id %}">
-                                    <img src="{{ MEDIA_URL }}noimage.png" alt="{{ book.title }}" class="card-img-top img-fluid">
+                                    <img src="{{ MEDIA_URL }}noimage.png" alt="{{ book.title }} missing book cover" class="card-img-top img-fluid">
                                 </a>
                             {% endif %}
                             {% if request.user.is_superuser %}

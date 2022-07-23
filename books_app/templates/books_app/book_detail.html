@@ -31,7 +31,7 @@
         </div>
         <div class="col-12 col-md-6 col-lg-4">
             <p class="mb-0">{{ book.title }}</p>
-            <p class="lead mb-0 text-left font-weight-bold">${{ book.price }}</p>
+            <p class="lead mb-0 text-left font-weight-bold">€{{ book.price }}</p>
             {% if book.rating %}
                 <small class="text-muted"><i class="fas fa-star mr-1"></i>{{ book.rating }}</small>
             {% else %}
