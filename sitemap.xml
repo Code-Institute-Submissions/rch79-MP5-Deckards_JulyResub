@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://deckards.herokuapp.com/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/accounts/signup/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/accounts/login/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/accounts/login/?next=/shopping_bag/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/books/?sort=sort_title&amp;direction=asc</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/books/?sort=price&amp;direction=asc</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/books/?sort=rating&amp;direction=desc</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/books/?sort=rating_count&amp;direction=desc</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/books/?sort=year&amp;direction=asc</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/books/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/authors/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/awards/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/accounts/password/reset/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/accounts/signup/?next=%2Fshopping_bag%2F</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/books/9/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/authors/6/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/books/7/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/authors/1/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/books/8/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/authors/4/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/books/6/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/authors/5/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/books/4/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/authors/2/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/books/2/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/books/5/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/books/3/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/authors/3/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/awards/1/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/accounts/login/?next=%2Fshopping_bag%2F</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/accounts/login/?next=/awards/add_award_details/</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/accounts/signup/?next=%2Fawards%2Fadd_award_details%2F</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.41</priority>
+</url>
+<url>
+  <loc>https://deckards.herokuapp.com/accounts/login/?next=%2Fawards%2Fadd_award_details%2F</loc>
+  <lastmod>2022-07-24T04:19:13+00:00</lastmod>
+  <priority>0.33</priority>
+</url>
+
+
+</urlset>
