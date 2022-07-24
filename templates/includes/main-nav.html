@@ -31,9 +31,10 @@
                     Store Admin
                 </a>
                 <div class="dropdown-menu border-0" aria-labelledby="all-products-link">
-                    <a href="{% url 'add_book' %}?sort=sort_title&direction=asc" class="dropdown-item">Add a Book</a>
-                    <a href="{% url 'add_author' %}?sort=price&direction=asc" class="dropdown-item">Add an Author</a>
-                    <a href="{% url 'add_award' %}?sort=rating&direction=desc" class="dropdown-item">Add an Award</a>
+                    <a href="{% url 'add_book' %}" class="dropdown-item">Add a Book</a>
+                    <a href="{% url 'add_author' %}" class="dropdown-item">Add an Author</a>
+                    <a href="{% url 'add_award' %}" class="dropdown-item">Add an Award</a>
+                    <a href="{% url 'add_award_details' %}" class="dropdown-item">Add Award Details to a Book</a>
                 </div>
             </li>
         {% endif %}
