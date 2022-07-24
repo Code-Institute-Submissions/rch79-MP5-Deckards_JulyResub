@@ -1,108 +1,178 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# [Deckard's Bookstore](https://deckards.herokuapp.com/)
 
-Welcome rch79,
+#### Your online source for science fiction books 
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
-
-You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **September 1, 2021**
-
-## Gitpod Reminders
-
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
-
-`python3 -m http.server`
-
-A blue button should appear to click: _Make Public_,
-
-Another blue button should appear to click: _Open Browser_.
-
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
-
-A blue button should appear to click: _Make Public_,
-
-Another blue button should appear to click: _Open Browser_.
-
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
-
-To log into the Heroku toolbelt CLI:
-
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
-
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
+Check it out on [Heroku](https://deckards.herokuapp.com/)
 
 ------
 
-## Release History
+Deckard's Bookstore is an online bookstore specialized in science fiction content. The site allows shoppers to browse the inventory based on book title or author name. Users can also browse looks for titles based on literary awards - ie, browse for Hugo or Nebula award winning books.  
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+## Features
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+- Browsing based on book title or author
+- Browsing based on literary awards, such as Hugo Awards, Nebula etc
+- User profiles with order history and default shipping address
+- Safe credit and debit card transactions using the Stripe API
+- New account confirmations via email
+- Administrative access for store maintenance (add, edit or remove books, authors, literary awards)
+- Administrative access for site maintenance
+- Static and media file hosting on AWS
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+## Business Model
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+Deckard's is Business to Customer (B2C) retail shop 
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+- **Target Audience**:  Science-fiction readers
+- **Available Products**: Science-fiction (physical) books 
+- **Payment Method**: Credit / Debit card transactions (via Stripe API)
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+**Features**: 
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+- Search functionality
+- Sorting
+- Filtering (by author or literary award)
+- Order notifications
+- User Profiles
+- Mailing list signup
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
 
-------
+***Database***: Product details are stored in a Postgres database with the following available models:
 
-## FAQ about the uptime script
+- Model: **Author** - Used for storing author information
 
-**Why have you added this script?**
+  - Model Fields:
 
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
+    - **Name**: Author name, using underscore as a separator (ie, kurt_vonnegut)
 
-**How will this affect me?**
+    - **Friendly Name**: A user-friendly, formatted version of the name, useful for displaying on the website (ie Kurt Vonnegut)
 
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
+    - **Sort Name**: Used for sorting purposes (ie, Vonnegut, Kurt)
 
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
+    - **Bio**: Used to store biographical information about the author
 
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
+      
 
-**So….?**
+- Model: **Book** - Used for storing book information
 
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
+  - Model Fields:
 
-**Can I opt out?**
+    - **Author**: Book author. This is a foreign key that links the book model to an author model
 
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
+    - **ISBN**: ISBN of the book
 
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
+    - **Title**: Book title (ie, The Long Goodbye)
 
-**Anything more?**
+    - **Sort title**: Used for sorting purposes (ie, Long Goodbye, The)
 
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+    - **Year**: Year book was published
 
----
+    - **Pages**: Number of pages
 
-Happy coding!
+    - **Price**: Book price
+
+    - **Rating**: book rating
+
+    - **Rating Count**: Number of ratings
+
+    - **Plot**: A detailed description of the plot of the book
+
+    - **Description**: A short, spoiler-free summary of the story
+
+    - **Image URL**: Link to an URL containing an image associated with the book
+
+    - **Image**: An image file containing the book cover
+
+      
+
+- Model: **Award** - Used for storing literary award details
+
+  - Model Fields:
+
+    - **Name**: Name of the literary award (ie, hugo_awards, nebula_awards)
+
+    - **Friendly Name**: A user friendly name of the award (ie, Hugo Awards, Nebula Awards)
+
+    - **Sort Name**: Used for sorting purposes
+
+    - **Description**: A description / bio of the literary award
+
+    - **Books**: Books that won the award that are available in the store - links to the AwardDetails model
+
+      
+
+- Model: **Award Details** - Used for storing literary award details for a given book:
+
+  - Model Fields:
+    - **Book**: Title of the book - this links to the Book model
+    - **Award**: Name of the literary award - this links to the Award model
+    - **Award Year**: Year when the book was awarded
+    - **Category**: Category of the award (ie, best book, best author etc)
+
+- Database Diagram:
+
+  [INSERT LINK HERE]
+
+
+
+## User Stories - Customers:
+
+- Signup for a new account: As a customer I would like to signup for a new account
+- Login: As a customer I would like to login to the website to access my profile
+- View products: As a customer I would like to view the books available for purchasing
+- Add books to shopping cart: As a customer I would like to add books to my shopping cart
+- Remove books from shopping cart: As a customer I would like to remove books from my shopping cart
+- Purchase history: As a customer I would like to view my purchase history
+- Finalize purchase: As a customer I would like to pay for the items in my shopping cart
+- Search website: As a customer I would like to search the website
+- Reset password: As a customer I would like to reset my password
+- Change item quantity in my shopping cart: As a customer I would like to change the item quantity on my shopping cart
+
+### Testing  Customer user stories:
+
+| User Story                                                   | Test                                                         | Result                                                       |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| As a customer I would like to signup for a new account       | Click on Login / Register link on the upper right corner  -- Click on Register link  --  Fill out  required information  and submit -- Click on link included in verification email to activate account | Working as expected                                          |
+| As a customer I would like to login to the website to access my profile | Click on Login / Register link on the upper right corner -- Enter username or email address and password and click on Sign In | Working as expected. User is redirected to the main page and the Login / Register link is replaced with user's username |
+| As a customer I would like to view the books available for purchasing | Click on Books on the top navbar, and choose the sorting option | Working as expected                                          |
+| As a customer I would like to add books to my shopping cart  | Click on the book to be added to the cart -- choose the selected quantity -- and click on Add to Bag | Working as expected. Book is added to the shopping cart      |
+| As a customer I would like to remove books from my shopping cart | Click on the Shopping Bag link on the upper right corner -- click on the red trash can | Working as expected. Book is removed from the shopping bag   |
+| As a customer I would like to pay for the items in my shopping cart | Click on the Shopping Bag link on the upper right corner -- Click on Secure Checkout -- fill out form with required information -- Click on Complete Order | Working as expected - User is redirected to an order details page and is notified that the purchase has been successful |
+| As a customer I would like to view my purchase history       | Click on the username link on the upper right corner -- Click on My Profile | Working as expected -- Order History is displayed on the right half of the screen. Clicking on the order number will take the user to the order details page |
+| As a customer I would like to search the website             | Enter the search parameter on the search bar at the top of the screen | Working as expected - search results are displayed on the screen |
+| As a customer I would like to reset my password              | Click on Login / Register link on the upper right corner -- Click on the Forgot Password? link -- Enter account email address -- Click on password reset link received via email -- Enter new password | Working as expected - Email with a password reset link is sent to the customer |
+| As a customer I would like to change the item quantity on my shopping cart | Click on the shopping bag link on the upper right corner -- change the item quantity using the '+' or '-' buttons | Working as expected. Item quantity changes accordingly. If quantity is set to 0 or less item is removed from shopping bag |
+
+
+
+## User Stories - Site Admin:
+
+- Add new books to the store: As a site admin I would like to add new books to the store
+- Delete books from the store: As a site admin I would like to delete books from the store
+- Edit existing books in the store: As a site admin I would like to edit existing books in the store
+
+
+
+
+
+Sources:
+
+https://www.pexels.com/photo/woman-in-a-spacesuit-with-blue-helmet-7672255/  - Facebook profile photo
+
+
+
+https://www.facebook.com/Deckards-Bookstore-103332569137719 - Facebook page
+
+
+
+
+
+
+
