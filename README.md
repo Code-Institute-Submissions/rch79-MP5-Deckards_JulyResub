@@ -10,7 +10,7 @@ Follow us on [Facebook](https://www.facebook.com/Deckards-Bookstore-103332569137
 
 Deckard's Bookstore is an online bookstore specialized in science fiction content. The site allows shoppers to browse the inventory based on book title or author name. Users can also browse looks for titles based on literary awards - ie, browse for Hugo or Nebula award winning books.  
 
-
+![](https://github.com/rch79/MP5-Deckards/blob/main/media/main_page_snapshot.png?raw=true)
 
 ## Features
 
@@ -120,7 +120,7 @@ Deckard's is Business to Customer (B2C) retail shop
 
 - Database Diagram:
 
-  [INSERT LINK HERE]
+  ![](https://raw.githubusercontent.com/rch79/MP5-Deckards/ee13a500bf471ffb940bca84278df00573cb6c0d/media/database_diagram.PNG)
 
 
 
