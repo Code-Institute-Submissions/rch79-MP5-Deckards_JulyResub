@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block page_header %}
-<div class="header-container">
+<div class="header-container bg-black text-light">
     <div class="row">
         <div class="col"></div>
     </div>
@@ -10,41 +10,46 @@
 {% endblock %}
 
 {% block content %}
-<div class="overlay"></div>
-<div class="container-fluid">
+<div class="overlay mb-sm-5"></div>
+<div class="container-fluid bg-black text-light">
     <div class="row">
-        <div class="col text-center mt-3">
+        <div class="col text-center align-middle mt-10">
             <h2 class="logo-font">Authors</h2>
             {% if request.user.is_superuser %}
-                <div class="btn-group d-flex justify-content-center" role="group">
-                    <button type="button" class="mr-2 btn btn-info btn-sm">
-                        <a href="{% url 'add_author' %}" class="text-dark"><strong>Add an author</strong></a>
-                    </button>
+                <div class="btn-group d-flex justify-content-center" role="group">   
+                    <a href="{% url 'add_author' %}" class="text-dark">
+                            <button type="button" class="mr-2 btn btn-warning btn-sm">
+                                <strong class="text-uppercase">Add an author</strong>
+                        </button>
+                    </a>
                 </div>
             {% endif%}
             <h2 class="w-50 mt-1 mb-2"></h2>
         </div>
     </div>
-    <div class="row">
+    <div class="row bg-black text-light">
         <div class="product-container col-10 offset-1">
             <div class="row mt-1 mb-2"></div>
             <div class="row">
                 <div class="card w-100" ;">
-                    <div class="card-header">
-                      Authors
+                    <div class="card-header bg-black border-black">
                     </div>
                     <ul class="list-group list-group-flush">
                         {% for author in authors %}
-                            <li class="list-group-item">
-                                <a href="{% url 'author_detail' author.id %}"><p class="mb-0">{{ author.friendly_name }}</p>
+                            <li class="list-group-item bg-black text-light">
+                                <a href="{% url 'author_detail' author.id %}" ><p class="mb-0 text-light">{{ author.friendly_name }}</p>
                                     {% if request.user.is_superuser %}
-                                        <div class="btn-group d-flex justify-content-center" role="group">
-                                            <button type="button" class="mr-2 btn btn-warning btn-sm">
-                                                <a href="{% url 'edit_author' author.id %}" class="text-dark"><strong>Edit</strong></a>
-                                            </button>
-                                            <button type="button" class="mr-2 btn btn-danger btn-sm">
-                                                <a href="{% url 'delete_author' author.id %}" class="text-dark"><strong>Delete</strong></a>
-                                            </button>
+                                        <div class="btn-group d-flex justify-content-left" role="group">
+                                                <a href="{% url 'edit_author' author.id %}" class="text-dark">
+                                                    <button type="button" class="mr-2 btn btn-warning btn-sm">
+                                                        <strong>Edit</strong>
+                                                    </button>
+                                                </a>
+                                                <a href="{% url 'delete_author' author.id %}" class="text-dark">
+                                                    <button type="button" class="mr-2 btn btn-danger btn-sm">
+                                                        <strong>Delete</strong>
+                                                     </button>
+                                                </a>
                                         </div>
                                     {% endif %}
                             </li>
