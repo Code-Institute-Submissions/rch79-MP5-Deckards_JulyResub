@@ -18,12 +18,12 @@
             {% if request.user.is_superuser %}
                 <div class="btn-group d-flex justify-content-center" role="group">   
                     <a href="{% url 'add_author' %}" class="text-dark">
-                            <button type="button" class="mr-2 btn btn-warning btn-sm">
-                                <strong class="text-uppercase">Add an author</strong>
+                        <button type="button" class="mr-2 btn btn-warning btn-sm">
+                            <strong class="text-uppercase">Add an author</strong>
                         </button>
                     </a>
                 </div>
-            {% endif%}
+            {% endif %}
             <h2 class="w-50 mt-1 mb-2"></h2>
         </div>
     </div>
@@ -37,25 +37,27 @@
                     <ul class="list-group list-group-flush">
                         {% for author in authors %}
                             <li class="list-group-item bg-black text-light">
-                                <a href="{% url 'author_detail' author.id %}" ><p class="mb-0 text-light">{{ author.friendly_name }}</p>
-                                    {% if request.user.is_superuser %}
-                                        <div class="btn-group d-flex justify-content-left" role="group">
-                                                <a href="{% url 'edit_author' author.id %}" class="text-dark">
-                                                    <button type="button" class="mr-2 btn btn-warning btn-sm">
-                                                        <strong>Edit</strong>
-                                                    </button>
-                                                </a>
-                                                <a href="{% url 'delete_author' author.id %}" class="text-dark">
-                                                    <button type="button" class="mr-2 btn btn-danger btn-sm">
-                                                        <strong>Delete</strong>
-                                                     </button>
-                                                </a>
-                                        </div>
-                                    {% endif %}
+                                <a href="{% url 'author_detail' author.id %}">
+                                    <p class="mb-0 text-light">{{ author.friendly_name }}</p>
+                                </a>
+                                {% if request.user.is_superuser %}
+                                    <div class="btn-group d-flex justify-content-left" role="group">
+                                        <a href="{% url 'edit_author' author.id %}" class="text-dark">
+                                            <button type="button" class="mr-2 btn btn-warning btn-sm">
+                                                <strong>Edit</strong>
+                                            </button>
+                                        </a>
+                                        <a href="{% url 'delete_author' author.id %}" class="text-dark">
+                                            <button type="button" class="mr-2 btn btn-danger btn-sm">
+                                                <strong>Delete</strong>
+                                            </button>
+                                        </a>
+                                    </div>
+                                {% endif %}
                             </li>
                         {% endfor %}
                     </ul>
-                  </div>
+                </div>
             </div>
         </div>
     </div>
