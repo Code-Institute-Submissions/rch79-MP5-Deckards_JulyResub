@@ -98,6 +98,8 @@ def display_award_detail(request, award_id):
     """ Display award detail """
 
     award = get_object_or_404(Award, pk=award_id)
+    award_name = award.friendly_name
+    award_desc = award.description
     award_details = AwardDetails.objects.filter(
         award__exact=award).order_by('award_year')
     award_years = []
@@ -108,6 +110,8 @@ def display_award_detail(request, award_id):
 
     context = {
         'award': award,
+        'award_name': award_name,
+        'award_desc': award_desc,
         'award_details': award_details,
         'award_years': award_years,
     }
