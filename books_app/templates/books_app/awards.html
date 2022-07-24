@@ -28,17 +28,17 @@
         </div>
     </div>
     <div class="row bg-black text-light">
-        <div class="product-container col-10 offset-1">
+        <div class="product-container col-10 offset-1 mt-5">
             <div class="row mt-1 mb-2"></div>
             <div class="row">
-                <div class="card w-100" ;">
+                <div class="card w-100">
                     <div class="card-header bg-black border-black">
                     </div>
                     <ul class="list-group list-group-flush">
                         {% for award in awards %}
                             <li class="list-group-item bg-black text-light">
                                 <a href="{% url 'award_detail' award.id %}">
-                                    <p class="mb-0">{{ award.friendly_name }}</p>
+                                    <p class="mb-0 text-light">{{ award.friendly_name }}</p>
                                 </a>
                                 {% if request.user.is_superuser %}
                                     <div class="btn-group d-flex justify-content-left" role="group">
@@ -47,8 +47,6 @@
                                                 <strong>Edit</strong>
                                             </button>
                                         </a>
-                                    </div>
-                                    <div class="btn-group d-flex justify-content-left" role="group">
                                         <a href="{% url 'delete_award' award.id %}" class="text-dark">
                                             <button type="button" class="mr-2 btn btn-danger btn-sm">
                                                 <strong>Delete</strong>
