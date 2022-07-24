@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block page_header %}
-<div class="header-container">
+<div class="header-container bg-black text-light">
     <div class="row">
         <div class="col"></div>
     </div>
@@ -10,17 +10,20 @@
 {% endblock %}
 
 {% block content %}
-<div class="overlay"></div>
-<div class="container-fluid">
+<div class="overlay mb-sm-5"></div>
+<div class="container-fluid bg-black text-light">
     <div class="row">
-        <div class="col text-center mt-3">
-            <h2 class="logo-font">Titles</h2>
+        <div class="col text-center align-middle mt-10">
+            <h2 class="logo-font">Books</h2>
             {% if request.user.is_superuser %}
-            <div class="btn-group d-flex justify-content-center" role="group">
-                <button type="button" class="mr-2 btn btn-info btn-sm">
-                    <a href="{% url 'add_book' %}" class="text-dark"><strong>Add a book</strong></a>
-                </button>
+            <div class="btn-group d-flex justify-content-center" role="group">         
+                <a href="{% url 'add_book' %}" class="text-dark">
+                    <button type="button" class="mr-2 btn btn-warning btn-sm">
+                        <strong class="text-uppercase">Add a book</strong>
+                    </button>
+                </a>
             </div>
+            <hr class="border-light">
             {% endif%}
             <h2 class="w-50 mt-1 mb-2"></h2>
         </div>
@@ -57,7 +60,7 @@
             <div class="row">
                 {% for book in books %}
                     <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="card-img-top border-0 book-img-card">
+                        <div class="card-img-top border-0">
                             {% if book.image %}
                                 <a href="{% url 'book_detail' book.id %}">
                                     <img src="{{ book.image.url }}" alt="{{ book.title }} cover" class="card-img-top img-fluid">
@@ -69,29 +72,29 @@
                             {% endif %}
                             {% if request.user.is_superuser %}
                                 <div class="btn-group d-flex justify-content-center" role="group">
-                                    <button type="button" class="mr-2 btn btn-warning btn-sm">
+                                    <button type="button" class="btn btn-warning btn-sm">
                                         <a href="{% url 'edit_book' book.id %}" class="text-dark"><strong>Edit</strong></a>
                                     </button>
-                                    <button type="button" class="ml-2 btn btn-danger btn-sm">
+                                    <button type="button" class="btn btn-danger btn-sm">
                                         <a href="{% url 'delete_book' book.id %}" class="text-white">Delete</a>
                                     </button>
                                 </div>
                             {% endif %}
                             <div class="card-body pb-0">
                                 <a href="{% url 'book_detail' book.id %}">
-                                    <p class="mb-0">{{ book.title }}</p>
+                                    <p class="mb-0 text-white">{{ book.title }}</p>
                                 </a>
                             </div>
                             <div class="card-body pt-0 pb-1">
                                 <p class="small">by 
-                                    <a href="{% url 'author_detail' book.author.id %}">{{ book.author.friendly_name }}</a>
+                                    <a href="{% url 'author_detail' book.author.id %}" class="text-light">{{ book.author.friendly_name }}</a>
                                 </p>
                             </div>
 
-                            <div class="card-footer bg-white pt-0 border-0 text-left">
+                            <div class="card-footer pt-0 border-0 text-left">
                                 <div class="row">
                                     <div class="col">
-                                        <p class="lead mb-0 text-left font-weight bold">${{ book.price }}</p>
+                                        <p class="lead mb-0 text-left font-weight bold">€{{ book.price }}</p>
                                         {% if book.rating %}
                                             <small class="text-muted"><i class="fas fa-star mr-1"></i>{{ book.rating }} / 5</small>
                                         {% else %}
@@ -107,28 +110,28 @@
                     <!-- renders hr only in extra small screens with 1 column-->
                     {% if forloop.counter|divisibleby:1 %}
                         <div class="col-12 d-sm-none mb-5">
-                            <hr>
+                            <hr class="border-light">
                         </div>
                     {% endif %}
 
                     <!-- renders hr only in small or medium screens with 2 columns-->
                     {% if forloop.counter|divisibleby:2 %}
                         <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-5">
-                            <hr>
+                            <hr class="border-light">
                         </div>
                     {% endif %}
 
                     <!-- renders hr only in large screens with 3 columns -->
                     {% if forloop.counter|divisibleby:3 %}
                         <div class="col-12 d-none d-lg-block d-xl-none mb-5">
-                            <hr>
+                            <hr class="border-light">
                         </div>
                     {% endif %}
 
                     <!-- renders hr only in large screens with 4 columns -->
                     {% if forloop.counter|divisibleby:4 %}
                         <div class="col-12 d-none d-xl-block mb-5">
-                            <hr>
+                            <hr class="border-light">
                         </div>
                     {% endif %}
 
@@ -142,7 +145,7 @@
         <i class="fas fa-arrow-up mx-auto my-auto"></i>
     </a>
 </div>
-{% endblock%}
+{% endblock %}
 
 {% block postload_javascript %}
 {{ block.super }}
