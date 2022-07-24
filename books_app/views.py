@@ -1,5 +1,9 @@
-from django.shortcuts import get_object_or_404, render, reverse, redirect
+from django.shortcuts import (
+                            get_object_or_404, render, reverse,
+                            redirect, HttpResponseRedirect
+                            )
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.db.models.functions import Lower
 
@@ -9,8 +13,8 @@ from .forms import BookForm, AuthorForm, AwardForm, AwardDetailsForm
 # Create your views here.
 
 
-def all_books(request):
-    """ Displays all available books """
+def display_all_books(request):
+    """ Display all available books """
 
     books = Book.objects.all()
     query = None
@@ -54,8 +58,8 @@ def all_books(request):
     return render(request, 'books_app/books.html', context)
 
 
-def all_authors(request):
-    """ Displays all available authors """
+def display_all_authors(request):
+    """ Display all available authors """
 
     authors = Author.objects.all().order_by('sort_name')
 
@@ -66,8 +70,8 @@ def all_authors(request):
     return render(request, 'books_app/authors.html', context)
 
 
-def book_detail(request, book_id):
-    """ Displays book detail """
+def display_book_detail(request, book_id):
+    """ Display book detail """
 
     book = get_object_or_404(Book, pk=book_id)
 
@@ -78,8 +82,8 @@ def book_detail(request, book_id):
     return render(request, 'books_app/book_detail.html', context)
 
 
-def all_awards(request):
-    """ Displays all available book awards """
+def display_all_awards(request):
+    """ Display all available book awards """
 
     awards = Award.objects.all().order_by('sort_name')
 
@@ -90,8 +94,8 @@ def all_awards(request):
     return render(request, 'books_app/awards.html', context)
 
 
-def award_detail(request, award_id):
-    """ Displays award detail """
+def display_award_detail(request, award_id):
+    """ Display award detail """
 
     award = get_object_or_404(Award, pk=award_id)
     award_details = AwardDetails.objects.filter(
@@ -112,69 +116,80 @@ def award_detail(request, award_id):
 
 
 #  ---------------------------------------------- Books
-
+@login_required
 def add_book(request):
     '''Add a book to the store'''
 
-    if request.method == "POST":
-        form = BookForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'New book successfully added')
-            return redirect(reverse('add_book'))
+    if request.user.is_superuser:
+        if request.method == "POST":
+            form = BookForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'New book successfully added')
+                return redirect(reverse('add_book'))
+            else:
+                messages.error(request, 'Failed to add new book. '
+                               'Please ensure information provided is valid')
         else:
-            messages.error(request, 'Failed to add new book. '
-                           'Please ensure information provided is valid')
+            form = BookForm()
+
+        template = 'books_app/add_book.html'
+        context = {
+            'form': form,
+        }
+
+        return render(request, template, context)
     else:
-        form = BookForm()
-
-    template = 'books_app/add_book.html'
-    context = {
-        'form': form,
-    }
-
-    return render(request, template, context)
+        return HttpResponseRedirect('/')
 
 
+@login_required
 def edit_book(request, book_id):
     '''Edit an existing book in the store'''
 
-    book = get_object_or_404(Book, pk=book_id)
+    if request.user.is_superuser:
+        book = get_object_or_404(Book, pk=book_id)
 
-    if request.method == 'POST':
-        form = BookForm(request.POST, request.FILES, instance=book)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Book successfully updated')
-            return redirect(reverse('book_detail', args=[book.id]))
+        if request.method == 'POST':
+            form = BookForm(request.POST, request.FILES, instance=book)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Book successfully updated')
+                return redirect(reverse('book_detail', args=[book.id]))
+            else:
+                messages.error(request, 'Failed to update book. '
+                               'Please ensure information provided is valid')
         else:
-            messages.error(request, 'Failed to update book. '
-                           'Please ensure information provided is valid')
+            form = BookForm(instance=book)
+            messages.info(request, f'You are editing { book.title }')
+
+        template = 'books_app/edit_book.html'
+        context = {
+            'form': form,
+            'book': book
+        }
+
+        return render(request, template, context)
     else:
-        form = BookForm(instance=book)
-        messages.info(request, f'You are editing { book.title }')
-
-    template = 'books_app/edit_book.html'
-    context = {
-        'form': form,
-        'book': book
-    }
-
-    return render(request, template, context)
+        return HttpResponseRedirect('/')
 
 
+@login_required
 def delete_book(request, book_id):
     '''Delete an existing book'''
 
-    book = get_object_or_404(Book, pk=book_id)
-    book.delete()
-    messages.success(request, 'Book deleted')
-    return redirect(reverse('books'))
+    if request.user.is_superuser:
+        book = get_object_or_404(Book, pk=book_id)
+        book.delete()
+        messages.success(request, 'Book deleted')
+        return redirect(reverse('books'))
+    else:
+        return HttpResponseRedirect('/')
 
 
 #  ---------------------------------------------- Authors
 
-def author_detail(request, author_id):
+def display_author_detail(request, author_id):
     """ Displays author detail """
 
     author = get_object_or_404(Author, pk=author_id)
@@ -188,182 +203,217 @@ def author_detail(request, author_id):
     return render(request, 'books_app/author_detail.html', context)
 
 
+@login_required
 def add_author(request):
     '''Add an author to the store'''
 
-    if request.method == "POST":
-        form = AuthorForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'New author successfully added')
-            return redirect(reverse('add_author'))
+    if request.user.is_superuser:
+        if request.method == "POST":
+            form = AuthorForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'New author successfully added')
+                return redirect(reverse('add_author'))
+            else:
+                messages.error(request, 'Failed to add new author. '
+                               'Please ensure information provided is valid')
         else:
-            messages.error(request, 'Failed to add new author. '
-                           'Please ensure information provided is valid')
+            form = AuthorForm()
+
+        template = 'books_app/add_author.html'
+        context = {
+            'form': form,
+        }
+
+        return render(request, template, context)
     else:
-        form = AuthorForm()
-
-    template = 'books_app/add_author.html'
-    context = {
-        'form': form,
-    }
-
-    return render(request, template, context)
+        return HttpResponseRedirect('/')
 
 
+@login_required
 def edit_author(request, author_id):
     '''Edit an existing author'''
 
-    author = get_object_or_404(Author, pk=author_id)
+    if request.user.is_superuser:
+        author = get_object_or_404(Author, pk=author_id)
 
-    if request.method == 'POST':
-        form = AuthorForm(request.POST, instance=author)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Author successfully updated')
-            return redirect(reverse('authors'))
+        if request.method == 'POST':
+            form = AuthorForm(request.POST, instance=author)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Author successfully updated')
+                return redirect(reverse('authors'))
+            else:
+                messages.error(request, 'Failed to update author. '
+                               'Please ensure information provided is valid')
         else:
-            messages.error(request, 'Failed to update author. '
-                           'Please ensure information provided is valid')
+            form = AuthorForm(instance=author)
+            messages.info(request, f'You are editing { author.friendly_name }')
+
+        template = 'books_app/edit_author.html'
+        context = {
+            'form': form,
+            'author': author
+        }
+
+        return render(request, template, context)
     else:
-        form = AuthorForm(instance=author)
-        messages.info(request, f'You are editing { author.friendly_name }')
-
-    template = 'books_app/edit_author.html'
-    context = {
-        'form': form,
-        'author': author
-    }
-
-    return render(request, template, context)
+        return HttpResponseRedirect('/')
 
 
+@login_required
 def delete_author(request, author_id):
     '''Delete an existing book'''
 
-    author = get_object_or_404(Author, pk=author_id)
-    author.delete()
-    messages.success(request, 'Author deleted')
-    return redirect(reverse('books'))
+    if request.user.is_superuser:
+        author = get_object_or_404(Author, pk=author_id)
+        author.delete()
+        messages.success(request, 'Author deleted')
+        return redirect(reverse('books'))
+    else:
+        return HttpResponseRedirect('/')
 
 
 #  ---------------------------------------------- Awards
-
+@login_required
 def add_award(request):
     '''Add an award to the store'''
 
-    if request.method == "POST":
-        form = AwardForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'New award successfully added')
-            return redirect(reverse('add_award'))
+    if request.user.is_superuser:
+        if request.method == "POST":
+            form = AwardForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'New award successfully added')
+                return redirect(reverse('add_award'))
+            else:
+                messages.error(request, 'Failed to add new award. '
+                               'Please ensure information provided is valid')
         else:
-            messages.error(request, 'Failed to add new award. '
-                           'Please ensure information provided is valid')
+            form = AwardForm()
+
+        template = 'books_app/add_award.html'
+        context = {
+            'form': form,
+        }
+
+        return render(request, template, context)
     else:
-        form = AwardForm()
-
-    template = 'books_app/add_award.html'
-    context = {
-        'form': form,
-    }
-
-    return render(request, template, context)
+        return HttpResponseRedirect('/')
 
 
+@login_required
 def edit_award(request, award_id):
     '''Edit an existing award'''
 
-    award = get_object_or_404(Award, pk=award_id)
+    if request.user.is_superuser:
+        award = get_object_or_404(Award, pk=award_id)
 
-    if request.method == 'POST':
-        form = AwardForm(request.POST, instance=award)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Award successfully updated')
-            return redirect(reverse('awards'))
+        if request.method == 'POST':
+            form = AwardForm(request.POST, instance=award)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Award successfully updated')
+                return redirect(reverse('awards'))
+            else:
+                messages.error(request, 'Failed to update award. '
+                               'Please ensure information provided is valid')
         else:
-            messages.error(request, 'Failed to update award. '
-                           'Please ensure information provided is valid')
+            form = AwardForm(instance=award)
+            messages.info(request, f'You are editing { award.friendly_name }')
+
+        template = 'books_app/edit_award.html'
+        context = {
+            'form': form,
+            'award': award
+        }
+
+        return render(request, template, context)
     else:
-        form = AwardForm(instance=award)
-        messages.info(request, f'You are editing { award.friendly_name }')
-
-    template = 'books_app/edit_award.html'
-    context = {
-        'form': form,
-        'award': award
-    }
-
-    return render(request, template, context)
+        return HttpResponseRedirect('/')
 
 
+@login_required
 def delete_award(request, award_id):
     '''Delete an existing award'''
 
-    award = get_object_or_404(Award, pk=award_id)
-    award.delete()
-    messages.success(request, 'Award deleted')
-    return redirect(reverse('awards'))
+    if request.user.is_superuser:
+        award = get_object_or_404(Award, pk=award_id)
+        award.delete()
+        messages.success(request, 'Award deleted')
+        return redirect(reverse('awards'))
+    else:
+        return HttpResponseRedirect('/')
 
 
 #  ---------------------------------------------- Award Details
-
+@login_required
 def add_award_details(request):
     '''Add award details to an existing book'''
 
-    if request.method == "POST":
-        form = AwardDetailsForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Award Details successfully added')
-            return redirect(reverse('add_award_details'))
+    if request.user.is_superuser:
+        if request.method == "POST":
+            form = AwardDetailsForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Award Details successfully added')
+                return redirect(reverse('add_award_details'))
+            else:
+                messages.error(request, 'Failed to add award details. '
+                               'Please ensure information provided is valid')
         else:
-            messages.error(request, 'Failed to add award details. '
-                           'Please ensure information provided is valid')
+            form = AwardDetailsForm()
+
+        template = 'books_app/add_award_details.html'
+        context = {
+            'form': form,
+        }
+
+        return render(request, template, context)
     else:
-        form = AwardDetailsForm()
-
-    template = 'books_app/add_award_details.html'
-    context = {
-        'form': form,
-    }
-
-    return render(request, template, context)
+        return HttpResponseRedirect('/')
 
 
+@login_required
 def edit_award_detail(request, award_detail_id):
     '''Edit an existing book in the store'''
 
-    award_detail = get_object_or_404(AwardDetails, pk=award_detail_id)
+    if request.user.is_superuser:
+        award_detail = get_object_or_404(AwardDetails, pk=award_detail_id)
 
-    if request.method == 'POST':
-        form = AwardDetailsForm(request.POST, instance=award_detail)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Book successfully updated')
-            return redirect(reverse('awards'))
+        if request.method == 'POST':
+            form = AwardDetailsForm(request.POST, instance=award_detail)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Book successfully updated')
+                return redirect(reverse('awards'))
+            else:
+                messages.error(request, 'Failed to update book. '
+                               'Please ensure information provided is valid')
         else:
-            messages.error(request, 'Failed to update book. '
-                           'Please ensure information provided is valid')
+            form = AwardDetailsForm(instance=award_detail)
+            messages.info(request, 'You are editing '
+                          f'{ award_detail.book.title }')
+
+        template = 'books_app/edit_award_detail.html'
+        context = {
+            'form': form,
+            'award_detail': award_detail
+        }
+
+        return render(request, template, context)
     else:
-        form = AwardDetailsForm(instance=award_detail)
-        messages.info(request, f'You are editing { award_detail.book.title }')
-
-    template = 'books_app/edit_award_detail.html'
-    context = {
-        'form': form,
-        'award_detail': award_detail
-    }
-
-    return render(request, template, context)
+        return HttpResponseRedirect('/')
 
 
+@login_required
 def delete_award_detail(request, award_detail_id):
     '''Delete an existing book'''
 
-    award_detail = get_object_or_404(AwardDetails, pk=award_detail_id)
-    award_detail.delete()
-    messages.success(request, 'Award detail deleted')
-    return redirect(reverse('awards'))
+    if request.user.is_superuser:
+        award_detail = get_object_or_404(AwardDetails, pk=award_detail_id)
+        award_detail.delete()
+        messages.success(request, 'Award detail deleted')
+        return redirect(reverse('awards'))
+    else:
+        return HttpResponseRedirect('/')

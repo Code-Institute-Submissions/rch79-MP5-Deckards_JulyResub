@@ -3,6 +3,7 @@ from .models import Book, Author, Award, AwardDetails
 
 # Register your models here.
 
+
 class BookAdmin(admin.ModelAdmin):
     list_display = (
         'isbn',
@@ -41,6 +42,7 @@ class AwardDetailsAdmin(admin.ModelAdmin):
         'award_year',
         'category'
     )
+
 
 admin.site.register(Book, BookAdmin)
 admin.site.register(Author, AuthorAdmin)

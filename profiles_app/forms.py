@@ -3,6 +3,8 @@ from .models import UserProfile
 
 
 class UserProfileForm(forms.ModelForm):
+    ''' User profile form '''
+
     class Meta:
         model = UserProfile
 

@@ -3,6 +3,7 @@ from .models import Book, Author, Award, AwardDetails
 
 
 class BookForm(forms.ModelForm):
+    ''' Form for adding or editing book info '''
 
     class Meta:
         model = Book
@@ -21,6 +22,7 @@ class BookForm(forms.ModelForm):
 
 
 class AuthorForm(forms.ModelForm):
+    ''' Form for adding or editing author info '''
 
     class Meta:
         model = Author
@@ -34,6 +36,7 @@ class AuthorForm(forms.ModelForm):
 
 
 class AwardForm(forms.ModelForm):
+    ''' Form for adding or editing literary award '''
 
     class Meta:
         model = Award
@@ -48,6 +51,10 @@ class AwardForm(forms.ModelForm):
 
 
 class AwardDetailsForm(forms.ModelForm):
+    '''
+    Form for adding or editing literaty awards
+    associated with a book in the database
+    '''
 
     class Meta:
         model = AwardDetails
