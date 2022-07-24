@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+<div class="header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container h-100">
+    <div class="row h-100">
+        <div class="col my-auto px-5">
+            <h1 class="d-block logo-font text-light bg-black text-center px-5">
+                The best sci-fi bookstore
+            </h1>
+            <div class="my-5 mx-auto">
+                <h4 class="my-auto">
+                    <a href="{% url 'books' %}" class="shop-now-button btn btn-lg rounded-0 text-uppercase py-3">
+                        Shop Now
+                    </a>
+                </h4>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}
